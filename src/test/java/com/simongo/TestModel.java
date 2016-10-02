@@ -4,7 +4,9 @@ import com.simongo.todolist.model.Building;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -12,10 +14,10 @@ import org.junit.Test;
  */
 public class TestModel {
 
-	private SessionFactory sessionFactory;
+	private static SessionFactory sessionFactory;
 
-	@Before
-	public void setUp(){
+	@BeforeClass
+	public static void setUp(){
 		// create session factory
 		sessionFactory = new Configuration()
 				.configure("hibernate-dbh2.cfg.xml")
@@ -25,28 +27,34 @@ public class TestModel {
 
 	@Test
 	public void testDropCreateInsertIntoBuildingTable(){
-
-		// create session
 		Session session = sessionFactory.getCurrentSession();
-
 		try {
-
 			Building building = new Building(1,"Building 123", "Lorem Street 12, Dubai", "A tall building");
-
-			// new transaction
 			session.beginTransaction();
-
-			// save the building
 			session.save(building);
-
-			// commit transaction
 			session.getTransaction().commit();
-
-		}
-		finally {
-			sessionFactory.close();
+		} finally {
+			session.close();
 		}
 	}
+
+	@Test
+	public void testSelectFromBuildingTable(){
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			Building building = session.get(Building.class, 1);
+			Assert.assertTrue(building.getName().equals("Building 123"));
+		} finally {
+			session.close();
+		}
+	}
+
+	@AfterClass
+	public static void CleanUp(){
+		sessionFactory.close();
+	}
+
 }
 
 
