@@ -47,6 +47,7 @@
 		<jetty9.version>9.2.13.v20150730</jetty9.version>
 		<log4j.version>2.5</log4j.version>
 		<junit.version>4.12</junit.version>
+		<dbh2.version>1.4.192</dbh2.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<wtp.version>none</wtp.version>
@@ -110,6 +111,14 @@
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all</artifactId>
 			<version>${jetty9.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!--  H2 DATABASE DEPENDENCIES FOR TESTING  -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${dbh2.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
