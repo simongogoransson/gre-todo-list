@@ -1,5 +1,7 @@
 package com.simongo;
 
+import com.simongo.todolist.HomePage;
+import com.simongo.todolist.WicketApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
