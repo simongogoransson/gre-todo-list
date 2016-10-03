@@ -1,7 +1,10 @@
 package com.simongo.todolist.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,9 +13,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="building")
-public class Building {
+public class Building implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 
@@ -29,8 +33,7 @@ public class Building {
 
 	}
 
-	public Building(int id, String name, String address, String description) {
-		this.id = id;
+	public Building(String name, String address, String description) {
 		this.name = name;
 		this.address = address;
 		this.description = description;
