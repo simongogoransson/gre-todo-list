@@ -29,7 +29,7 @@ public class TestModel {
 	public void testDropCreateInsertIntoBuildingTable(){
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			Building building = new Building(1,"Building 123", "Lorem Street 12, Dubai", "A tall building");
+			Building building = new Building("Building 123", "Lorem Street 12, Dubai", "A tall building");
 			session.beginTransaction();
 			session.save(building);
 			session.getTransaction().commit();
