@@ -2,6 +2,7 @@ package com.simongo.todolist.pages;
 
 import com.simongo.todolist.hibernate.HibernateUtil;
 import com.simongo.todolist.model.Building;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -17,7 +18,7 @@ public class AddBuildingPage extends WebPage {
 
 	private static final long serialVersionUID = 2L;
 
-	public AddBuildingPage()
+	public AddBuildingPage(final ModalWindow window, final WebPage parentPage)
 	{
 
 		final Building building = new Building();
@@ -33,9 +34,7 @@ public class AddBuildingPage extends WebPage {
 			@Override
 			public void onSubmit() {
 				super.onSubmit();
-
-				System.out.println("Name" + building.getName() );
-
+				
 				SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
 				Session session = sessionFactory.getCurrentSession();
@@ -43,6 +42,8 @@ public class AddBuildingPage extends WebPage {
 				session.beginTransaction();
 				session.save(building);
 				session.getTransaction().commit();
+
+				setResponsePage(new ThankYouPage(window));
 
 			}
 		};
