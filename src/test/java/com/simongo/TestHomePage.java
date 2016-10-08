@@ -1,7 +1,7 @@
 package com.simongo;
 
-import com.simongo.todolist.HomePage;
 import com.simongo.todolist.WicketApplication;
+import com.simongo.todolist.pages.StartPage;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +23,9 @@ public class TestHomePage
 	public void homepageRendersSuccessfully()
 	{
 		//start and render the test page
-		tester.startPage(HomePage.class);
+		tester.startPage(StartPage.class);
 
 		//assert rendered page class
-		tester.assertRenderedPage(HomePage.class);
+		tester.assertRenderedPage(StartPage.class);
 	}
 }
