@@ -2,7 +2,11 @@
     margin: 5px 10px;
 }
 
-#save-building {
+input #save-building {
+    margin: 10px 0px;
+}
+
+input #save-task {
     margin: 10px 0px;
 }
 
