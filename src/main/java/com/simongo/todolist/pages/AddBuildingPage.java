@@ -16,8 +16,6 @@ import org.hibernate.SessionFactory;
  */
 public class AddBuildingPage extends WebPage {
 
-	private static final long serialVersionUID = 2L;
-
 	public AddBuildingPage(final ModalWindow window, final WebPage parentPage)
 	{
 
@@ -34,6 +32,9 @@ public class AddBuildingPage extends WebPage {
 			@Override
 			public void onSubmit() {
 				super.onSubmit();
+
+				building.setNumberOfCompleted(0);
+				building.setNumberOfCompleted(0);
 				
 				SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
