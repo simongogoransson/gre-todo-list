@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+<head>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+	<div wicket:id="navbar"></div>
+	<div wicket:id="newTaskWindow"></div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3>Task for building: <span wicket:id="buildingName">buildingName</span></h3>
+		</div>
+
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Status</th>
+			</tr>
+			<tr wicket:id="taskList">
+				<td>
+					<span wicket:id="name">name</span>
+				</td>
+				<td>
+					<span wicket:id="description">description</span>
+				</td>
+				<td>
+					<span wicket:id="status">status</span>
+				</td>
+				<td>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Action <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="#" wicket:id="startedButton">Set status to started</a></li>
+							<li><a href="#" wicket:id="completedButton" >Set status to completed</a></li>
+							<li><a href="#" wicket:id="deleteButton" >Delete</a></li>
+
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div class="panel-footer">
+			<a id="add-task" class="btn btn-default" wicket:id="addTask">Add new Task</a>
+			<a class="btn btn-default" wicket:id="back">Back</a>
+		</div>
+
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

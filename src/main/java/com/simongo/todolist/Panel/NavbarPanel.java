@@ -1,4 +1,4 @@
-package com.simongo.todolist.Panel;
+package com.simongo.todolist.panel;
 
 import com.simongo.todolist.pages.ListBuildingsPage;
 import com.simongo.todolist.pages.StartPage;

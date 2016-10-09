@@ -1,7 +1,9 @@
 package com.simongo.todolist.pages;
 
+import com.simongo.todolist.constants.TaskConstants;
 import com.simongo.todolist.hibernate.HibernateUtil;
 import com.simongo.todolist.model.Building;
+import com.simongo.todolist.model.Task;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
@@ -12,20 +14,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
- * Created by simon on 02/10/16.
+ * Created by simon on 07/10/16.
  */
-public class AddBuildingPage extends WebPage {
+public class AddTaskPage extends WebPage {
 
-	public AddBuildingPage(final ModalWindow window, final WebPage parentPage)
+	public AddTaskPage(final ModalWindow window, final Building building)
 	{
 
-		final Building building = new Building();
+		final Task task = new Task();
 
 		Form<?> form = new Form("form");
 
-		TextField<String> name = new TextField<String>("name", new PropertyModel<String>(building, "name"));
-		TextField<String> address = new TextField<String>("address", new PropertyModel<String>(building, "address"));
-		TextField<String> description = new TextField<String>("description", new PropertyModel<String>(building, "description"));
+		TextField<String> name = new TextField<String>("name", new PropertyModel<String>(task, "name"));
+		TextField<String> description = new TextField<String>("description", new PropertyModel<String>(task, "description"));
 
 		Button button = new Button("submit") {
 
@@ -33,27 +34,36 @@ public class AddBuildingPage extends WebPage {
 			public void onSubmit() {
 				super.onSubmit();
 
-				building.setNumberOfCompleted(0);
-				building.setNumberOfCompleted(0);
-				
+				task.setStatus(TaskConstants.STATUS_PENDING);
+				task.setBuildingId(building.getId());
+
+				int numberOfTasks = building.getNumberOfTasks();
+
+				building.setNumberOfTasks(numberOfTasks + 1);
+
 				SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
 				Session session = sessionFactory.getCurrentSession();
 
 				session.beginTransaction();
-				session.save(building);
+				session.save(task);
+				session.update(building);
 				session.getTransaction().commit();
 
-				setResponsePage(new ThankYouPage(window));
+				setResponsePage(new TaskCreated(window));
 
 			}
 		};
 
 		add(form);
 		form.add(name);
-		form.add(address);
 		form.add(description);
 		form.add(button);
 
 	}
+
+
 }
+
+
+

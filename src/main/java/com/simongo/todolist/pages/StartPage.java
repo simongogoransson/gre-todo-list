@@ -1,6 +1,6 @@
 package com.simongo.todolist.pages;
 
-import com.simongo.todolist.Panel.NavbarPanel;
+import com.simongo.todolist.panel.NavbarPanel;
 import org.apache.wicket.markup.html.WebPage;
 
 /**
