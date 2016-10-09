@@ -29,14 +29,22 @@ public class Building implements Serializable {
 	@Column(name="description")
 	private String description;
 
+	@Column(name="number_of_tasks")
+	private int numberOfTasks;
+
+	@Column(name="number_of_completed")
+	private int numberOfCompleted;
+
 	public Building() {
 
 	}
 
-	public Building(String name, String address, String description) {
+	public Building(String name, String address, String description, int numberOfTasks, int numberOfCompleted) {
 		this.name = name;
 		this.address = address;
 		this.description = description;
+		this.numberOfTasks = numberOfTasks;
+		this.numberOfCompleted = numberOfCompleted;
 	}
 
 	public int getId() {
@@ -71,6 +79,22 @@ public class Building implements Serializable {
 		this.description = description;
 	}
 
+	public int getNumberOfTasks() {
+		return numberOfTasks;
+	}
+
+	public void setNumberOfTasks(int numberOfTasks) {
+		this.numberOfTasks = numberOfTasks;
+	}
+
+	public int getNumberOfCompleted() {
+		return numberOfCompleted;
+	}
+
+	public void setNumberOfCompleted(int numberOfCompleted) {
+		this.numberOfCompleted = numberOfCompleted;
+	}
+
 	@Override
 	public String toString() {
 		return "Building{" +
@@ -78,6 +102,8 @@ public class Building implements Serializable {
 				", name='" + name + '\'' +
 				", address='" + address + '\'' +
 				", description='" + description + '\'' +
+				", numberOfTasks=" + numberOfTasks +
+				", numberOfCompleted=" + numberOfCompleted +
 				'}';
 	}
 }
