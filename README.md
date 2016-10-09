@@ -1,6 +1,6 @@
 # gre-todo-list
 
-This is an little exampel todo list application for manageing diffrents task around a building.
+This is an little exampel todo list application for manageing diffrents task around a buildings.
 
 ### This is what you can do in the app 
 * Create new buildings
