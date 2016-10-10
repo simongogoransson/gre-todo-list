@@ -7,10 +7,8 @@ import java.util.List;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -26,7 +24,7 @@ public class ListBuildingsPage extends WebPage {
 
 	private ModalWindow modalWindow;
 
-	public ListBuildingsPage() {
+	public ListBuildingsPage(final String user) {
 
 		final WebPage listBuildingsPage = this;
 
@@ -41,9 +39,11 @@ public class ListBuildingsPage extends WebPage {
 		modalWindow.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
 			@Override
 			public void onClose(AjaxRequestTarget ajaxRequestTarget) {
-				setResponsePage(new ListBuildingsPage());
+				setResponsePage(new ListBuildingsPage(user));
 			}
 		});
+
+		add(new Label("user", user));
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -60,7 +60,7 @@ public class ListBuildingsPage extends WebPage {
 					@Override
 					public void onClick()
 					{
-						setResponsePage(new BuildingPage(building));
+						setResponsePage(new BuildingPage(building, user));
 					}
 				};
 
@@ -107,12 +107,18 @@ public class ListBuildingsPage extends WebPage {
 		add(new NavbarPanel("navbar"));
 		add(buildingList);
 		add(new AjaxLink<String>("addBuilding"){
-
 			@Override
 			public void onClick(AjaxRequestTarget target) {
 				modalWindow.show(target);
 			}
 		});
+		add(new Link("myTasks") {
+			@Override
+			public void onClick() {
+				setResponsePage(new MyTasks(user));
+			}
+		});
+
 		add(modalWindow);
 
 	}

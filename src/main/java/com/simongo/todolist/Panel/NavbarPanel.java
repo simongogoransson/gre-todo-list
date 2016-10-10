@@ -1,6 +1,6 @@
 package com.simongo.todolist.panel;
 
-import com.simongo.todolist.pages.ListBuildingsPage;
+import com.simongo.todolist.pages.LoginPage;
 import com.simongo.todolist.pages.StartPage;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -26,7 +26,7 @@ public class NavbarPanel extends Panel{
 		};
 			Link linkApp = new Link("linkApp") {
 			public void onClick() {
-				setResponsePage(new ListBuildingsPage());
+				setResponsePage(new LoginPage());
 			}
 		};
 			Link linkAbout = new Link("linkAbout") {

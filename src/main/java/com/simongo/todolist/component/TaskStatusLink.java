@@ -33,7 +33,8 @@ public class TaskStatusLink extends Link {
 		task.setStatus(status);
 
 		if (status == TaskConstants.STATUS_COMPLETED){
-			building.setNumberOfCompleted(building.getNumberOfCompleted() + 1);
+			int numberOfCompleted = building.getNumberOfCompleted();
+			building.setNumberOfCompleted(numberOfCompleted + 1);
 		}
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();

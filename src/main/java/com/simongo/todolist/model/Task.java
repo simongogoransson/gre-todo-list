@@ -29,6 +29,9 @@ public class Task implements Serializable {
 	@Column(name="description")
 	private String description;
 
+	@Column(name = "task_user")
+	private String user;
+
 	@Column(name="status")
 	private int status;
 
@@ -36,10 +39,11 @@ public class Task implements Serializable {
 
 	}
 
-	public Task(int buildingId, String name, String description, int status) {
+	public Task(int buildingId, String name, String description, String user, int status) {
 		this.buildingId = buildingId;
 		this.name = name;
 		this.description = description;
+		this.user = user;
 		this.status = status;
 	}
 
@@ -73,6 +77,14 @@ public class Task implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public int getStatus() {

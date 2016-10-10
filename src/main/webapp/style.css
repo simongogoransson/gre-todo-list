@@ -2,11 +2,7 @@
     margin: 5px 10px;
 }
 
-input #save-building {
-    margin: 10px 0px;
-}
-
-input #save-task {
+.form-btn {
     margin: 10px 0px;
 }
 
