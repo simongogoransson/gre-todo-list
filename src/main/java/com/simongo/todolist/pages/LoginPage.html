@@ -9,17 +9,16 @@
 </head>
 <body>
 <div class="container">
-	<div class="page-header">
-		<h3>Add task</h3>
+	<div wicket:id="navbar"></div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<form wicket:id="form" class="col-md-4">
+				<label for="user">User</label>
+				<input class="form-control" wicket:id="user" id="user" type="text" size="4"/>
+				<input class="form-btn btn btn-default" type="submit" value="Login" wicket:id="submit" />
+			</form>
+		</div>
 	</div>
-
-	<form wicket:id="form">
-		<label for="name">Name</label>
-		<input class="form-control" wicket:id="name" id="name" type="text" size="40"/>
-		<label for="description">Description</label>
-		<input class="form-control" wicket:id="description" id="description" type="text" size="40"/>
-		<input id="save-task" class="form-btn btn btn-default" type="submit" value="Save task" wicket:id="submit" />
-	</form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"

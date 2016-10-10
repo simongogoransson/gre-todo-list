@@ -7,10 +7,6 @@ import com.simongo.todolist.model.Building;
 import com.simongo.todolist.model.Task;
 import com.simongo.todolist.panel.NavbarPanel;
 import java.util.List;
-import org.apache.wicket.Page;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
@@ -19,39 +15,24 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
-/**
- * Created by simon on 06/10/16.
- */
-public class BuildingPage extends WebPage {
+public class MyTasks extends WebPage {
 
-	private ModalWindow newTaskWindow;
-
-	public BuildingPage(final Building building, final String user) {
+	public MyTasks(final String user) {
 
 		add(new NavbarPanel("navbar"));
 
-		add(new Label("buildingName", building.getName()));
-
-		newTaskWindow = new ModalWindow("newTaskWindow");
-		newTaskWindow.setPageCreator(new ModalWindow.PageCreator() {
-			@Override
-			public Page createPage() {
-				return new AddTaskPage(newTaskWindow, building, user);
-			}
-		});
-		newTaskWindow.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
-			@Override
-			public void onClose(AjaxRequestTarget ajaxRequestTarget) {
-				setResponsePage(new BuildingPage(building, user));
-			}
-		});
-
-		add(newTaskWindow);
+		add(new Label("userName", user));
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		List<Task> list = session.createQuery("from Task where buildingId=" +building.getId()).list();
+
+		String hql = "FROM Task T WHERE T.user = :user_id";
+		Query query = session.createQuery(hql);
+		query.setParameter("user_id", user);
+		List<Task> list = query.list();
+
 		session.getTransaction().commit();
 
 		ListView taskList = new ListView("taskList", list) {
@@ -77,7 +58,13 @@ public class BuildingPage extends WebPage {
 				};
 
 				badge.add(status);
+
 				item.add(badge);
+
+				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				session.beginTransaction();
+				Building building = session.get(Building.class, task.getBuildingId());
+				session.getTransaction().commit();
 
 				WebMarkupContainer dropdownMenu = new WebMarkupContainer("dropdownMenu");
 
@@ -101,18 +88,11 @@ public class BuildingPage extends WebPage {
 				dropdownMenu.add(delete);
 
 				item.add(dropdownMenu);
+
 			}
 		};
 
 		add(taskList);
-
-		add(new AjaxLink<String>("addTask") {
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-				newTaskWindow.show(target);
-			}
-		});
-
 
 		Link back = new Link<Void>("back")
 		{

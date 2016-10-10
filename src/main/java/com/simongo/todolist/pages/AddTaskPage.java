@@ -18,8 +18,7 @@ import org.hibernate.SessionFactory;
  */
 public class AddTaskPage extends WebPage {
 
-	public AddTaskPage(final ModalWindow window, final Building building)
-	{
+	public AddTaskPage(final ModalWindow window, final Building building, final String user) {
 
 		final Task task = new Task();
 
@@ -36,6 +35,7 @@ public class AddTaskPage extends WebPage {
 
 				task.setStatus(TaskConstants.STATUS_PENDING);
 				task.setBuildingId(building.getId());
+				task.setUser(user);
 
 				int numberOfTasks = building.getNumberOfTasks();
 
@@ -59,10 +59,7 @@ public class AddTaskPage extends WebPage {
 		form.add(name);
 		form.add(description);
 		form.add(button);
-
 	}
-
-
 }
 
 
