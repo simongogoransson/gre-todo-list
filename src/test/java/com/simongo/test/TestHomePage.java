@@ -1,4 +1,4 @@
-package com.simongo;
+package com.simongo.test;
 
 import com.simongo.todolist.WicketApplication;
 import com.simongo.todolist.pages.StartPage;

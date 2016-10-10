@@ -76,7 +76,7 @@ public class MyTasks extends WebPage {
 					completed.setVisible(false);
 				} else if (task.getStatus() == TaskConstants.STATUS_STARTED) {
 					started.setVisible(false);
-				} else if (task.getStatus() == TaskConstants.STATUS_COMPLETED){
+				} else if (task.getStatus() == TaskConstants.STATUS_COMPLETED || task.getStatus() == TaskConstants.STATUS_DELETED){
 					started.setVisible(false);
 					completed.setVisible(false);
 					delete.setVisible(false);

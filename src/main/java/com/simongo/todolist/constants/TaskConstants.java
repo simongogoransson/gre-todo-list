@@ -1,7 +1,7 @@
 package com.simongo.todolist.constants;
 
 /**
- * Created by simon on 08/10/16.
+ * This class is a constants class the provide constants for the different statuses on a task.
  */
 public class TaskConstants {
 
@@ -11,6 +11,11 @@ public class TaskConstants {
 	public static final int STATUS_COMPLETED = 3;
 	public static final int STATUS_DELETED = 10;
 
+	/**
+	 * Provide a human friendly string of the status of a task.
+	 * @param status of a task
+	 * @return	the friendly string
+	 */
 	public static String getFriendlyStatus (int status) {
 		switch (status) {
 			case STATUS_NOT_CREATED:
@@ -27,6 +32,11 @@ public class TaskConstants {
 		return "";
 	}
 
+	/**
+	 * Method the returns a css class for a badge to display the status of a task.
+	 * @param status of a task
+	 * @return a css class
+	 */
 	public static String getStatusCssClass (int status) {
 		switch (status) {
 			case STATUS_NOT_CREATED:

@@ -9,17 +9,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
- * Created by simon on 08/10/16.
+ * This is a Compoent that extedns the Link component.
+ * It's purpose is to create liks to set a status on a task.
  */
 public class TaskStatusLink extends Link {
 
 	private Task task;
 	private Building building;
 	private int status;
-
-	public TaskStatusLink(String id) {
-		super(id);
-	}
 
 	public TaskStatusLink(String id, Task task, Building building, int status) {
 		super(id);
@@ -35,6 +32,9 @@ public class TaskStatusLink extends Link {
 		if (status == TaskConstants.STATUS_COMPLETED){
 			int numberOfCompleted = building.getNumberOfCompleted();
 			building.setNumberOfCompleted(numberOfCompleted + 1);
+		} else if (status == TaskConstants.STATUS_DELETED){
+			int numberOfTasks = building.getNumberOfTasks();
+			building.setNumberOfTasks(numberOfTasks - 1);
 		}
 
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();

@@ -21,7 +21,8 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.hibernate.Session;
 
 /**
- * Created by simon on 06/10/16.
+ * This page displas the representation of a building and all tasks that belongs to it.
+ * It displays a list of the tasks, in the list you can see the discripton of the task and the current status.
  */
 public class BuildingPage extends WebPage {
 
@@ -29,10 +30,12 @@ public class BuildingPage extends WebPage {
 
 	public BuildingPage(final Building building, final String user) {
 
+		//Top navigation bar.
 		add(new NavbarPanel("navbar"));
 
 		add(new Label("buildingName", building.getName()));
 
+		//Creating modal window for adding a new task to the building.
 		newTaskWindow = new ModalWindow("newTaskWindow");
 		newTaskWindow.setPageCreator(new ModalWindow.PageCreator() {
 			@Override
@@ -43,7 +46,13 @@ public class BuildingPage extends WebPage {
 		newTaskWindow.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
 			@Override
 			public void onClose(AjaxRequestTarget ajaxRequestTarget) {
-				setResponsePage(new BuildingPage(building, user));
+
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			Building newBuilding = session.get(Building.class, building.getId());
+			session.getTransaction().commit();
+
+			setResponsePage(new BuildingPage(newBuilding, user));
 			}
 		});
 
@@ -89,7 +98,7 @@ public class BuildingPage extends WebPage {
 					completed.setVisible(false);
 				} else if (task.getStatus() == TaskConstants.STATUS_STARTED) {
 					started.setVisible(false);
-				} else if (task.getStatus() == TaskConstants.STATUS_COMPLETED){
+				} else if (task.getStatus() == TaskConstants.STATUS_COMPLETED || task.getStatus() == TaskConstants.STATUS_DELETED){
 					started.setVisible(false);
 					completed.setVisible(false);
 					delete.setVisible(false);
@@ -112,7 +121,6 @@ public class BuildingPage extends WebPage {
 				newTaskWindow.show(target);
 			}
 		});
-
 
 		Link back = new Link<Void>("back")
 		{

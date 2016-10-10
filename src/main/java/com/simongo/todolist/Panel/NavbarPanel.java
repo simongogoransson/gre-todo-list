@@ -6,7 +6,8 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * Created by simon on 04/10/16.
+ * Navigation top bar, displayed on all pages.
+ * Used to navigate between pages.
  */
 public class NavbarPanel extends Panel{
 
@@ -29,16 +30,11 @@ public class NavbarPanel extends Panel{
 				setResponsePage(new LoginPage());
 			}
 		};
-			Link linkAbout = new Link("linkAbout") {
-			public void onClick() {
-				setResponsePage(new StartPage());
-			}
-		};
 
 		add(linkStart);
 		add(logoLink);
 		add(linkApp);
-		add(linkAbout);
+
 
 	}
 }

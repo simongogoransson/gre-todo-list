@@ -12,7 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
- * Created by simon on 02/10/16.
+ * Wicket webpage for adding a new building to the app, the page contains a form.
  */
 public class AddBuildingPage extends WebPage {
 
@@ -29,6 +29,9 @@ public class AddBuildingPage extends WebPage {
 
 		Button button = new Button("submit") {
 
+			/**
+			 * Save the building to the database.
+			 */
 			@Override
 			public void onSubmit() {
 				super.onSubmit();
@@ -44,7 +47,7 @@ public class AddBuildingPage extends WebPage {
 				session.save(building);
 				session.getTransaction().commit();
 
-				setResponsePage(new ThankYouPage(window));
+				setResponsePage(new BuildingCreatedPage(window));
 
 			}
 		};
