@@ -21,7 +21,8 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.hibernate.Session;
 
 /**
- * Created by simon on 06/10/16.
+ * This page displays the representation of a building and all tasks that belongs to it.
+ * It displays a list of the tasks, in the list you can see the description of the task and the current status.
  */
 public class BuildingPage extends WebPage {
 
@@ -29,10 +30,12 @@ public class BuildingPage extends WebPage {
 
 	public BuildingPage(final Building building, final String user) {
 
+		//Top navigation bar.
 		add(new NavbarPanel("navbar"));
 
 		add(new Label("buildingName", building.getName()));
 
+		//Creating modal window for adding a new task to the building.
 		newTaskWindow = new ModalWindow("newTaskWindow");
 		newTaskWindow.setPageCreator(new ModalWindow.PageCreator() {
 			@Override
@@ -43,18 +46,26 @@ public class BuildingPage extends WebPage {
 		newTaskWindow.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
 			@Override
 			public void onClose(AjaxRequestTarget ajaxRequestTarget) {
-				setResponsePage(new BuildingPage(building, user));
+
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			Building newBuilding = session.get(Building.class, building.getId());
+			session.getTransaction().commit();
+
+			setResponsePage(new BuildingPage(newBuilding, user));
 			}
 		});
 
 		add(newTaskWindow);
 
+		// Getting task from database
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		List<Task> list = session.createQuery("from Task where buildingId=" +building.getId()).list();
 		session.getTransaction().commit();
 
 		ListView taskList = new ListView("taskList", list) {
+			// Setting all the files and data on the list item.
 			protected void populateItem(ListItem item) {
 
 				final Task task = (Task) item.getModel().getObject();
@@ -85,11 +96,12 @@ public class BuildingPage extends WebPage {
 				TaskStatusLink completed = new TaskStatusLink("completedButton", task, building, TaskConstants.STATUS_COMPLETED);
 				TaskStatusLink delete = new TaskStatusLink("deleteButton", task, building, TaskConstants.STATUS_DELETED);
 
+				// To only display the valid buttons
 				if (task.getStatus() == TaskConstants.STATUS_PENDING ){
 					completed.setVisible(false);
 				} else if (task.getStatus() == TaskConstants.STATUS_STARTED) {
 					started.setVisible(false);
-				} else if (task.getStatus() == TaskConstants.STATUS_COMPLETED){
+				} else if (task.getStatus() == TaskConstants.STATUS_COMPLETED || task.getStatus() == TaskConstants.STATUS_DELETED){
 					started.setVisible(false);
 					completed.setVisible(false);
 					delete.setVisible(false);
@@ -112,7 +124,6 @@ public class BuildingPage extends WebPage {
 				newTaskWindow.show(target);
 			}
 		});
-
 
 		Link back = new Link<Void>("back")
 		{

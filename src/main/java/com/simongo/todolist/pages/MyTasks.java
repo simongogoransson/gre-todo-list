@@ -17,6 +17,10 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+/**
+ * This page displays the representation of a user and all tasks that belongs to the user.
+ * It displays a list of the tasks, in the list you can see the description of the task and the current status.
+ */
 public class MyTasks extends WebPage {
 
 	public MyTasks(final String user) {
@@ -36,6 +40,7 @@ public class MyTasks extends WebPage {
 		session.getTransaction().commit();
 
 		ListView taskList = new ListView("taskList", list) {
+			// Setting all the files and data on the list item.
 			protected void populateItem(ListItem item) {
 
 				final Task task = (Task) item.getModel().getObject();
@@ -72,11 +77,12 @@ public class MyTasks extends WebPage {
 				TaskStatusLink completed = new TaskStatusLink("completedButton", task, building, TaskConstants.STATUS_COMPLETED);
 				TaskStatusLink delete = new TaskStatusLink("deleteButton", task, building, TaskConstants.STATUS_DELETED);
 
+				// Setting all the files and data on the list item.
 				if (task.getStatus() == TaskConstants.STATUS_PENDING ){
 					completed.setVisible(false);
 				} else if (task.getStatus() == TaskConstants.STATUS_STARTED) {
 					started.setVisible(false);
-				} else if (task.getStatus() == TaskConstants.STATUS_COMPLETED){
+				} else if (task.getStatus() == TaskConstants.STATUS_COMPLETED || task.getStatus() == TaskConstants.STATUS_DELETED){
 					started.setVisible(false);
 					completed.setVisible(false);
 					delete.setVisible(false);

@@ -7,11 +7,11 @@ import org.apache.wicket.markup.html.WebPage;
 
 
 /**
- * Created by simon on 07/10/16.
+ *  Wicket webpage for confirming that the creation of a building went well.
  */
-public class ThankYouPage extends WebPage {
+public class BuildingCreatedPage extends WebPage {
 
-	public ThankYouPage(final ModalWindow window) {
+	public BuildingCreatedPage(final ModalWindow window) {
 
 		add(new AjaxLink("close") {
 			public void onClick(AjaxRequestTarget target) {

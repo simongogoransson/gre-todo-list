@@ -14,7 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
- * Created by simon on 07/10/16.
+ * Wicket webpage for adding a new task to the app, the page contains a form.
  */
 public class AddTaskPage extends WebPage {
 

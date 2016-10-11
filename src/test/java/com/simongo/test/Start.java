@@ -1,4 +1,4 @@
-package com.simongo;
+package com.simongo.test;
 
 import java.lang.management.ManagementFactory;
 

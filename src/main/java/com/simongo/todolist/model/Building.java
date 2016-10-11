@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by simon on 01/10/16.
+ * Entity class Building using JPA annotation.
  */
 @Entity
 @Table(name="building")

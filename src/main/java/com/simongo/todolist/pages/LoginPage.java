@@ -7,6 +7,11 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 
+/**
+ * The login page for the application. This is a very simple solution.
+ * Their is no real user entity in the application only a simple string that represents the user
+ * and are passed around in the system. Their is password either.
+ */
 public class LoginPage extends WebPage {
 
 	public LoginPage() {
