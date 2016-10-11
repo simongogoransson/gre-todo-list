@@ -17,8 +17,10 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.hibernate.Session;
 
+
 /**
- * Created by simon on 04/10/16.
+ * This page displays a list of building, in the list you can see the name and description of the building
+ * and a progressbar on how many of the tasks on the building that is completed.
  */
 public class ListBuildingsPage extends WebPage {
 
@@ -26,6 +28,7 @@ public class ListBuildingsPage extends WebPage {
 
 	public ListBuildingsPage(final String user) {
 
+		add(new NavbarPanel("navbar"));
 		final WebPage listBuildingsPage = this;
 
 		modalWindow = new ModalWindow("modalWindow");
@@ -35,13 +38,13 @@ public class ListBuildingsPage extends WebPage {
 				return new AddBuildingPage(modalWindow, listBuildingsPage);
 			}
 		});
-
 		modalWindow.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
 			@Override
 			public void onClose(AjaxRequestTarget ajaxRequestTarget) {
 				setResponsePage(new ListBuildingsPage(user));
 			}
 		});
+		add(modalWindow);
 
 		add(new Label("user", user));
 
@@ -51,6 +54,7 @@ public class ListBuildingsPage extends WebPage {
 		session.getTransaction().commit();
 
 		ListView buildingList = new ListView("buildingList", list) {
+			// Setting all the files and data on the list item.
 			protected void populateItem(ListItem item) {
 
 				final Building building = (Building) item.getModel().getObject();
@@ -65,46 +69,45 @@ public class ListBuildingsPage extends WebPage {
 				};
 
 				Label name = new Label("name", building.getName());
+				buildingLink.add(name);
+				item.add(buildingLink);
+
 				Label address = new Label("address", building.getAddress());
 				Label description = new Label("description", building.getDescription());
-				Label nrTasks = new Label("nrTasks", building.getNumberOfTasks());
-				Label completed = new Label("completed", building.getNumberOfCompleted());
-
-				buildingLink.add(name);
 				item.add(address);
 				item.add(description);
 
+				WebMarkupContainer progressBar = new WebMarkupContainer("progressBar") {
+
+					@Override
+					protected void onComponentTag(ComponentTag tag) {
+						tag.put("aria-valuenow", building.getNumberOfCompleted());
+						tag.put("aria-valuemin", 0);
+						tag.put("aria-valuemax", building.getNumberOfTasks());
 
 
-					WebMarkupContainer progressBar = new WebMarkupContainer("progressBar") {
-
-						@Override
-						protected void onComponentTag(ComponentTag tag) {
-							tag.put("aria-valuenow", building.getNumberOfCompleted());
-							tag.put("aria-valuemin", 0);
-							tag.put("aria-valuemax", building.getNumberOfTasks());
-
-
-							if (building.getNumberOfTasks() != 0) {
-								int percentage = (building.getNumberOfCompleted() * 100 / building.getNumberOfTasks());
-								tag.put("style","width:"+percentage+"%");
-							} else {
-								tag.put("hidden", "true");
-							}
-
-							super.onComponentTag(tag);
+						if (building.getNumberOfTasks() != 0) {
+							int percentage = (building.getNumberOfCompleted() * 100 / building.getNumberOfTasks());
+							tag.put("style","width:"+percentage+"%");
+						} else {
+							tag.put("hidden", "true");
 						}
-					};
-					progressBar.add(nrTasks);
-					progressBar.add(completed);
-					item.add(progressBar);
+
+						super.onComponentTag(tag);
+					}
+				};
+
+				Label nrTasks = new Label("nrTasks", building.getNumberOfTasks());
+				Label completed = new Label("completed", building.getNumberOfCompleted());
+				progressBar.add(nrTasks);
+				progressBar.add(completed);
+
+				item.add(progressBar);
 
 
-				item.add(buildingLink);
 			}
 		};
 
-		add(new NavbarPanel("navbar"));
 		add(buildingList);
 		add(new AjaxLink<String>("addBuilding"){
 			@Override
@@ -118,8 +121,5 @@ public class ListBuildingsPage extends WebPage {
 				setResponsePage(new MyTasks(user));
 			}
 		});
-
-		add(modalWindow);
-
 	}
 }

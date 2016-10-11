@@ -7,7 +7,7 @@ import org.apache.wicket.markup.html.WebPage;
 
 
 /**
- * Created by simon on 07/10/16.
+ * Wicket webpage for confirming that the creation of a task went well.
  */
 public class TaskCreated extends WebPage {
 

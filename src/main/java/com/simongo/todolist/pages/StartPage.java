@@ -4,7 +4,7 @@ import com.simongo.todolist.panel.NavbarPanel;
 import org.apache.wicket.markup.html.WebPage;
 
 /**
- * Created by simon on 04/10/16.
+ * The start page of the application. Displaces the navbar and a information text about the app.
  */
 
 public class StartPage extends WebPage {
